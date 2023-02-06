@@ -10,7 +10,7 @@ parser.add_argument("--save_dir", default="")
 args = parser.parse_args()
 
 if __name__ == "__main__":
-    if not os.path.exists(args.save_dir):
-        os.makedirs(args.save_dir)
+    if not os.path.exists(f"{args.name_en}/{args.no}/"):
+        os.makedirs(f"{args.name_en}/{args.no}/")
     crawler = NaverWebtoonCrawl(args.name_en)
-    crawler.save_episode_images(no=228, save_dir=args.save_dir)
+    crawler.save_episode_images(no=228)

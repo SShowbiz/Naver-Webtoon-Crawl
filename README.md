@@ -13,7 +13,7 @@ $ pip install argparse tqdm
 Add corresponding WEBTOON2CONFIG key and value in assets.py for your interested webtoon. You can find `id` of each webtoon in list view of the url. 
 
 ```shell
-$ python crawl.py --name_en ${WEBTOON2CONFIG_KEY} --no ${WEBTOON_EPISODE_NO} --save_dir ${IMAGE_SAVE_DIR}
+$ python crawl.py --name_en ${WEBTOON2CONFIG_KEY} --no ${WEBTOON_EPISODE_NO}
 ```
 
 Above command will save images of specific episode of the webtoon you want.
