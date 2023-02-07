@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 from tqdm import tqdm
+from urllib.parse import urlparse, parse_qs
+import os
 from assets import BASE_LIST_URL, BASE_DETAIL_URL, HEADERS, WEBTOON2CONFIG
 
 
@@ -24,6 +26,13 @@ class NaverWebtoonCrawl:
         html = BeautifulSoup(markup=response.content, features="html.parser")
         return html
 
+    def get_last_episode_no(self):
+        html = self.get_list_html(page=1)
+        last_episode_url = html.find("td", {"class", "title"}).find("a")["href"]
+        parsed_url = urlparse(last_episode_url)
+        last_episode_no = int(parse_qs(parsed_url.query)["no"][0])
+        return last_episode_no
+
     def save_episode_images(self, no: int):
         html = self.get_detail_html(no=no)
         images = html.find("div", {"class", "wt_viewer"}).findAll("img")
@@ -32,3 +41,8 @@ class NaverWebtoonCrawl:
             with open(f"{self.webtoon_name_en}/{no}/{idx:03d}.jpg", "wb") as file:
                 src = requests.get(image['src'], headers=HEADERS)
                 file.write(src.content)
+
+    def save_all_images(self):
+        last_no = self.get_last_episode_no()
+        for episode_no in range(1, last_no + 1):
+            self.save_episode_images(no=episode_no)
