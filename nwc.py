@@ -34,6 +34,9 @@ class NaverWebtoonCrawl:
         return last_episode_no
 
     def save_episode_images(self, no: int):
+        if not os.path.exists(f"{self.webtoon_name_en}/{no}/"):
+            os.makedirs(f"{self.webtoon_name_en}/{no}/")
+
         html = self.get_detail_html(no=no)
         images = html.find("div", {"class", "wt_viewer"}).findAll("img")
         
