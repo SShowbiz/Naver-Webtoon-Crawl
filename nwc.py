@@ -39,10 +39,10 @@ class NaverWebtoonCrawl:
 
         html = self.get_detail_html(no=no)
         images = html.find("div", {"class", "wt_viewer"}).findAll("img")
-        
+
         for idx, image in enumerate(tqdm(images)):
             with open(f"{self.webtoon_name_en}/{no}/{idx:03d}.jpg", "wb") as file:
-                src = requests.get(image['src'], headers=HEADERS)
+                src = requests.get(image["src"], headers=HEADERS)
                 file.write(src.content)
 
     def save_all_images(self):
